@@ -1,1 +1,26 @@
-body { background: #eee; }
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #f0f8ff;
+  margin: 0;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+.logo {
+  width: 200px;
+  margin-bottom: 20px;
+}
+input, button {
+  padding: 10px;
+  margin: 5px;
+  font-size: 1rem;
+}
+.evento {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #fff;
+}

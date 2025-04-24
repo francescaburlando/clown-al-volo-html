@@ -1,1 +1,23 @@
-<!-- eventi stub -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clown al Volo - Eventi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎪 Eventi</h1>
+    <p id="saluto"></p>
+    <div id="lista-eventi"></div>
+    <div id="admin-area" style="display:none;">
+      <button onclick="aggiungiEvento()">➕ Aggiungi Evento</button>
+    </div>
+    <button onclick="logout()">🚪 Logout</button>
+  </div>
+
+  <script src="js/firebase-init.js"></script>
+  <script src="js/eventi.js"></script>
+</body>
+</html>

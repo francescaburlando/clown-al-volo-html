@@ -1,1 +1,35 @@
-<!-- semplificato per continuità --> <html><body><h1>Stub</h1></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clown al Volo - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="assets/logo.jpg" alt="Logo" class="logo">
+    <h1>Ciao Clown!</h1>
+    <input type="text" id="nome" placeholder="Il tuo nome"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">🎈 Entra</button>
+  </div>
+
+  <script src="js/firebase-init.js"></script>
+  <script>
+    function login() {
+      const nome = document.getElementById('nome').value.trim();
+      const password = document.getElementById('password').value.trim();
+      if (!nome || !password) return alert("Compila tutti i campi");
+
+      if (password === "sorriso" || password === "chevolo") {
+        localStorage.setItem("nome", nome);
+        localStorage.setItem("isAdmin", password === "chevolo");
+        window.location.href = "eventi.html";
+      } else {
+        alert("Password errata!");
+      }
+    }
+  </script>
+</body>
+</html>
