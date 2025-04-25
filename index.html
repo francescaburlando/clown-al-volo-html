@@ -14,21 +14,21 @@
     <div id="login-form">
       <input type="text" id="nome" placeholder="Il tuo nome"><br>
       <input type="password" id="password" placeholder="Password"><br>
-      <button onclick="login()">Vola✈️ </button>
+      <button onclick="login()">✈️ Entra</button>
     </div>
 
-    <div id="logout-area" style="display:none;">
+    <div id="user-area" style="display:none;">
+      <button onclick="window.location.href='eventi.html'">✈️ Vola</button>
       <button onclick="logout()">🚪 Logout</button>
     </div>
   </div>
 
-  <script src="js/firebase-init.js"></script>
   <script>
     const nome = localStorage.getItem("nome");
     if (nome) {
       document.getElementById("welcome-text").innerText = "Ciao " + nome + "!";
       document.getElementById("login-form").style.display = "none";
-      document.getElementById("logout-area").style.display = "block";
+      document.getElementById("user-area").style.display = "block";
     }
 
     function login() {
