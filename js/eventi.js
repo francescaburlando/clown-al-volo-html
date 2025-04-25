@@ -74,30 +74,33 @@ async function aggiungiEvento() {
   }
 }
 
-function formattaData(isoDate) {
+function toJSDate(d) {
   try {
-    const d = new Date(isoDate);
-    if (isNaN(d)) return "";
-
-    const giorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-    const mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-                  'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-
-    return `${giorni[d.getDay()]} ${d.getDate()} ${mesi[d.getMonth()]} ${d.getFullYear()}`;
+    if (!d) return null;
+    if (typeof d === "string") return new Date(d);
+    if (typeof d.toDate === "function") return d.toDate(); // Timestamp Firebase compat
+    return new Date(d);
   } catch {
-    return "";
+    return null;
   }
 }
 
-function formattaOra(isoDate) {
-  try {
-    const d = new Date(isoDate);
-    if (isNaN(d)) return "";
+function formattaData(d) {
+  const date = toJSDate(d);
+  if (!date || isNaN(date)) return "";
 
-    const ore = String(d.getHours()).padStart(2, '0');
-    const minuti = String(d.getMinutes()).padStart(2, '0');
-    return `${ore}:${minuti}`;
-  } catch {
-    return "";
-  }
+  const giorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+  const mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+                'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+
+  return `${giorni[date.getDay()]} ${date.getDate()} ${mesi[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function formattaOra(d) {
+  const date = toJSDate(d);
+  if (!date || isNaN(date)) return "";
+
+  const ore = String(date.getHours()).padStart(2, '0');
+  const minuti = String(date.getMinutes()).padStart(2, '0');
+  return `${ore}:${minuti}`;
 }
