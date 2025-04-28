@@ -26,11 +26,27 @@ async function caricaEventi() {
   lista.innerHTML = "";
 
   const snap = await db.collection("eventi").get();
-  snap.forEach(doc => {
-    const e = doc.data();
-    const dataFormattata = formattaData(e.data);
-    const oraFormattata = formattaOra(e.data);
 
+  const oggi = new Date();
+  const dataOggi = new Date(oggi.getFullYear(), oggi.getMonth(), oggi.getDate());
+
+  const eventi = snap.docs
+    .map(doc => ({ id: doc.id, ...doc.data() }))
+    .filter(e => {
+      const dataEvento = toJSDate(e.data);
+
+      if (!dataEvento || isNaN(dataEvento)) return false;
+
+      const dataSolo = new Date(dataEvento.getFullYear(), dataEvento.getMonth(), dataEvento.getDate());
+      return dataSolo >= dataOggi;
+    })
+    .sort((a, b) => {
+      const d1 = toJSDate(a.data);
+      const d2 = toJSDate(b.data);
+      return d1 - d2;
+    });
+
+  eventi.forEach(e => {
     const div = document.createElement("div");
     div.className = "evento";
     div.innerHTML = `
@@ -38,11 +54,11 @@ async function caricaEventi() {
       <p><strong>LUOGO:</strong> ${e.luogo}</p>
       <p><strong>DATA:</strong> ${formattaData(e.data)}</p>
       <p><strong>ORA:</strong> ${formattaOra(e.data)}</p>
-      <p><strong>PARTECIPANTI:</strong> ${e.partecipanti.join(", ")}</p>
+      <p><strong>Partecipanti:</strong> ${e.partecipanti.join(", ")}</p>
       ${!e.partecipanti.includes(localStorage.getItem("nome")) ?
-        `<button onclick="partecipa('${doc.id}', ${JSON.stringify(e.partecipanti)})">Partecipa</button>` : ""}
+        `<button onclick="partecipa('${e.id}', ${JSON.stringify(e.partecipanti)})">Partecipa</button>` : ""}
       ${localStorage.getItem("isAdmin") === "true" ?
-        `<button onclick="eliminaEvento('${doc.id}')">🗑️ Elimina</button>` : ""}
+        `<button onclick="eliminaEvento('${e.id}')">🗑️ Elimina</button>` : ""}
     `;
     lista.appendChild(div);
   });
